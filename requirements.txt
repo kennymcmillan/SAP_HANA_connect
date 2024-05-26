@@ -2,8 +2,6 @@ matplotlib
 pandas
 pyodbc
 hdbcli
-os
 streamlit
 json
-os
 dotenv
