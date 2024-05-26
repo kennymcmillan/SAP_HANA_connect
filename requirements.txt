@@ -3,4 +3,4 @@ pandas
 pyodbc
 hdbcli
 streamlit
-dotenv
+python-dotenv
