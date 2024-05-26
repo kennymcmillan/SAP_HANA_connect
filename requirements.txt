@@ -4,3 +4,4 @@ pyodbc
 hdbcli
 streamlit
 python-dotenv
+openai
