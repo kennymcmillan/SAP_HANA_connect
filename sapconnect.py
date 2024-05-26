@@ -11,7 +11,7 @@ import streamlit as st
 import json
 
 import os
-from dotenv import load_dotenv
+from python-dotenv import load_dotenv
 
 # import pygwalker as pyg
 # import streamlit.components.v1 as components
