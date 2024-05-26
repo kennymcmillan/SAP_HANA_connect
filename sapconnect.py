@@ -9,6 +9,10 @@ import openai
 import streamlit as st
 # import seaborn as sns
 import json
+
+import os
+from dotenv import load_dotenv
+
 # import pygwalker as pyg
 # import streamlit.components.v1 as components
 # from datetime import date, timedelta
@@ -36,13 +40,25 @@ import json
 #     )
     
 #     return connection
+is_local = os.getenv("ENVIRONMENT") == "local"
+
+if is_local:
+    # Load environment variables from .env file for local development
+    load_dotenv()
 
 def get_connection():
-    # Retrieve credentials from Streamlit secrets
-    host = st.secrets["sap_hana"]["host"]
-    port = st.secrets["sap_hana"]["port"]
-    user = st.secrets["sap_hana"]["user"]
-    password = st.secrets["sap_hana"]["password"]
+    if is_local:
+        # Retrieve credentials from environment variables for local development
+        host = os.getenv("SAP_HANA_HOST")
+        port = os.getenv("SAP_HANA_PORT")
+        user = os.getenv("SAP_HANA_USER")
+        password = os.getenv("SAP_HANA_PASSWORD")
+    else:
+        # Retrieve credentials from Streamlit secrets for cloud deployment
+        host = st.secrets["sap_hana"]["host"]
+        port = st.secrets["sap_hana"]["port"]
+        user = st.secrets["sap_hana"]["user"]
+        password = st.secrets["sap_hana"]["password"]
     
     connection = dbapi.connect(
         address=host,
@@ -115,3 +131,8 @@ rows = cursor.fetchall()
 cursor.close()
 
 df = pd.DataFrame(rows, columns=headers)
+
+st.write(df)
+
+# Optionally, to view the first few rows
+st.write(df.head())
